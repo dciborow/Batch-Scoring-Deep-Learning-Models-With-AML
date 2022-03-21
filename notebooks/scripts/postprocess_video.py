@@ -28,16 +28,17 @@ if __name__ == "__main__":
 
     os.makedirs(args.output_dir, exist_ok=True)
 
-    subprocess.run("ffmpeg -framerate 30 -i {}/%05d_video.jpg -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p "
-                   "-y {}/video_without_audio.mp4"
-                   .format(args.images_dir, args.output_dir),
-                   shell=True, check=True
-                  )
+    subprocess.run(
+        f"ffmpeg -framerate 30 -i {args.images_dir}/%05d_video.jpg -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p -y {args.output_dir}/video_without_audio.mp4",
+        shell=True,
+        check=True,
+    )
+
 
     video_name = args.video or 'video'
 
-    subprocess.run("ffmpeg -i {}/video_without_audio.mp4 -i {}/audio.aac -map 0:0 -map 1:0 -vcodec "
-                   "copy -acodec copy -y {}/{}_processed.mp4"
-                   .format(args.output_dir, args.input_audio, args.output_dir, video_name),
-                   shell=True, check=True
-                  )
+    subprocess.run(
+        f"ffmpeg -i {args.output_dir}/video_without_audio.mp4 -i {args.input_audio}/audio.aac -map 0:0 -map 1:0 -vcodec copy -acodec copy -y {args.output_dir}/{video_name}_processed.mp4",
+        shell=True,
+        check=True,
+    )

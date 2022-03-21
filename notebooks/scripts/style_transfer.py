@@ -140,7 +140,7 @@ def stylize(args):
         filenames = os.listdir(args.content_dir)
 
         for filename in filenames:
-            print("Processing {}".format(filename))
+            print(f"Processing {filename}")
             full_path = os.path.join(args.content_dir, filename)
             content_image = load_image(full_path, scale=args.content_scale)
             content_transform = transforms.Compose([

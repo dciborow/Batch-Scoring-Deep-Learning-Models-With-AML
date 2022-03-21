@@ -26,12 +26,15 @@ if __name__ == "__main__":
     os.makedirs(args.output_audio, exist_ok=True)
     os.makedirs(args.output_images, exist_ok=True)
 
-    subprocess.run("ffmpeg -i {} {}/audio.aac"
-                  .format(args.input_video, args.output_audio),
-                   shell=True, check=True
-                  )
+    subprocess.run(
+        f"ffmpeg -i {args.input_video} {args.output_audio}/audio.aac",
+        shell=True,
+        check=True,
+    )
 
-    subprocess.run("ffmpeg -i {} {}/%05d_video.jpg -hide_banner"
-                  .format(args.input_video, args.output_images),
-                   shell=True, check=True
-                  )
+
+    subprocess.run(
+        f"ffmpeg -i {args.input_video} {args.output_images}/%05d_video.jpg -hide_banner",
+        shell=True,
+        check=True,
+    )

@@ -147,7 +147,10 @@ def stylize(args, comm):
         filenames = sorted(filenames)
         partition_size = len(filenames) // size
         partitioned_filenames = filenames[rank * partition_size : (rank + 1) * partition_size]
-        print("RANK {} - is processing {} images out of the total {}".format(rank, len(partitioned_filenames), len(filenames)))
+        print(
+            f"RANK {rank} - is processing {len(partitioned_filenames)} images out of the total {len(filenames)}"
+        )
+
 
         output_paths = []
         for filename in partitioned_filenames:
@@ -168,13 +171,19 @@ def stylize(args, comm):
 
             output_paths.append(output_path)
 
-        print("RANK {} - number of pre-aggregated output files {}".format(rank, len(output_paths)))
+        print(
+            f"RANK {rank} - number of pre-aggregated output files {len(output_paths)}"
+        )
+
 
         output_paths_list = comm.gather(output_paths, root=0)
-        
+
         if rank == 0:
-          print("RANK {} - number of aggregated output files {}".format(rank, len(output_paths_list)))
-          print("RANK {} - end".format(rank))
+            print(
+                f"RANK {rank} - number of aggregated output files {len(output_paths_list)}"
+            )
+
+            print(f"RANK {rank} - end")
 
 
 def main():
